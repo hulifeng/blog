@@ -153,10 +153,18 @@
             <div class="panel panel-default sidebar" style="border: none;">
                 <div class="panel-heading">搜索热点</div>
                 <ul class="category-list list-unstyled">
-                    <li><a href="#"><span class="hot-red">1</span>laravel-5.7-博客教程</a></li>
-                    <li><a href="#"><span class="hot-orangered">2</span>PHP RFC: Preloading</a></li>
-                    <li><a href="#"><span class="hot-orange">3</span>PHP 高级工程面试题汇总</a></li>
-                    <li><a href="#"><span class="hot-default">4</span>Sint odit adipisci consectetur quod.</a></li>
+                    @foreach($hot_articles as $k => $hot_article)
+                        <li>
+                            <a href="{{ route('articles.show', array('id' => $hot_article->id)) }}">
+                                <span
+                                    @if($k == 0) class="hot-red"
+                                    @elseif($k == 1) class="hot-orangered"
+                                    @elseif($k == 2) class="hot-orange"
+                                    @else class="hot-default" @endif
+                                >{{ $k + 1 }}</span>{{ $hot_article->title }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

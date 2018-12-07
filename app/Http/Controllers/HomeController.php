@@ -27,6 +27,9 @@ class HomeController extends Controller
     {
         $articles = Article::where('is_hidden', '1')->paginate();
 
-        return view('home', compact('articles'));
+        // 热搜（默认浏览量在 Top 10 的）
+        $hot_articles = Article::select('id', 'title')->orderBy('view_count', 'desc')->limit(5)->get();
+
+        return view('home', compact('articles', 'hot_articles'));
     }
 }
