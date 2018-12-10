@@ -131,19 +131,23 @@
                    data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
             <div class="blog-order">
-                <a href="#" class="active">热门</a>
-                <a href="#">最新</a>
-                <a href="#">热评</a>
+                <a class="{{ active_class(if_query('order', 'default')) }}" href="{{ Request::url() }}?order=default" class="active">最新</a>
+                <a class="{{ active_class(if_query('order', 'hot')) }}" href="{{ Request::url() }}?order=hot">热门</a>
+                <a class="{{ active_class(if_query('order', 'buzz')) }}" href="{{ Request::url() }}?order=buzz">热评</a>
             </div>
             <div class="topic">
-                @foreach($articles as $article)
-                    <div class="blog-topic">
-                        <h2><a href="/articles/{{ $article->id }}">{{ $article->title }}</a></h2>
-                        <p>{{ $article->created_at->toFormattedDateString() }} by <a href="#">{{ $article->user->name }}</a></p>
-                        <p>{{ str_limit(strip_tags($article->content_html), 100) }}</p>
-                        <p>赞 {{ $article->like_count }} | 评论 {{ $article->reply_count }}</p>
-                    </div>
-                @endforeach
+                @if(sizeof($articles))
+                    @foreach($articles as $article)
+                        <div class="blog-topic">
+                            <h2><a href="/articles/{{ $article->id }}">{{ $article->title }}</a></h2>
+                            <p>{{ $article->created_at->toFormattedDateString() }} by <a href="#">{{ $article->user->name }}</a></p>
+                            <p>{{ str_limit(strip_tags($article->content_html), 100) }}</p>
+                            <p>赞 {{ $article->like_count }} | 评论 {{ $article->reply_count }}</p>
+                        </div>
+                    @endforeach
+                @else
+                    <span class="text-center" style="display: block; padding: 20px;">暂无文章~</span>
+                @endif
                 <div class="pages">
                     {{ $articles->links() }}
                 </div>

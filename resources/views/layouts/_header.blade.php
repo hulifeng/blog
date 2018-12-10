@@ -20,7 +20,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @foreach(\App\Models\Category::all() as $k => $category)
-                    <li><a href="#" @if($k == 0) class="active" @endif>{{ $category->name }}</a></li>
+                    <li class="{{ active_class(if_route('categories.show') && if_route_param('category', $k + 1)) }}"><a href="{{ route('categories.show', array('category' => $category->id)) }}" @if($k == 0) class="active" @endif>{{ $category->name }}</a></li>
                 @endforeach
             </ul>
 
